@@ -1,7 +1,8 @@
 import pygame
 import numpy as np
 
-window = pygame.display.set_mode((1000, 1000))
+window_width, window_height = 1000, 1000
+window = pygame.display.set_mode((window_width, window_height))
 colors = [(255, 51, 0), (255, 204, 0), (51, 204, 51), (51, 204, 204), (153, 51, 255)]
 translation_step = 5
 rotation_step = np.radians(0.8)
@@ -23,6 +24,8 @@ def project(cubes, distance):
         for i in range(len(cube)):
             projection.append(projection_matrix.dot(cube[i]))
             projection[i] *= (distance / (cube[i][2] + distance))
+            projection[i][1] += window_height/2
+            projection[i][0] += window_width/2
         projections.append(projection)
     return projections
 
@@ -89,7 +92,7 @@ def rotate(cubes, direction):
     return [[rotation.dot(cube[i]) for i in range(len(cube))] for cube in cubes]
 
 
-positions = [[200, 500, 10], [450, 500, 10], [700, 500, 10]]
+positions = [[-300, 0, 100], [0, 0, 100], [200, 0, 100]]
 dimensions = (100, 100, 100)
 cubes = []
 
