@@ -89,8 +89,6 @@ def rotate(cubes, direction):
     return [[rotation.dot(cube[i]) for i in range(len(cube))] for cube in cubes]
 
 
-# position = (500, 500, 300)
-# dimensions = (100, 100, 100)
 positions = [[200, 500, 10], [450, 500, 10], [700, 500, 10]]
 dimensions = (100, 100, 100)
 cubes = []
