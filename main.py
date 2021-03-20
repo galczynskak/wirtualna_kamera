@@ -56,17 +56,17 @@ def draw(projections):
 def translate(cubes, direction):
     translation = np.array([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]])
     if direction == 'a':
-        translation[0, 3] = -translation_step
-    elif direction == 'd':
         translation[0, 3] = translation_step
+    elif direction == 'd':
+        translation[0, 3] = -translation_step
     elif direction == 's':
         translation[1, 3] = -translation_step
     elif direction == 'w':
         translation[1, 3] = translation_step
     elif direction == 'f':
-        translation[2, 3] = -translation_step
-    elif direction == 'r':
         translation[2, 3] = translation_step
+    elif direction == 'r':
+        translation[2, 3] = -translation_step
 
     return [[translation.dot(cube[i]) for i in range(len(cube))] for cube in cubes]
 
@@ -149,9 +149,9 @@ while run:
             cubes = rotate(cubes, 'y')
 
         if keys[pygame.K_UP]:
-            distance -= zoom_step
-        if keys[pygame.K_DOWN]:
             distance += zoom_step
+        if keys[pygame.K_DOWN]:
+            distance -= zoom_step
 
     projections = project(cubes, distance)
     draw(projections)
