@@ -3,10 +3,12 @@ import numpy as np
 
 window_width, window_height = 1000, 1000
 window = pygame.display.set_mode((window_width, window_height))
-colors = [(255, 51, 0), (255, 204, 0), (51, 204, 51), (51, 204, 204), (153, 51, 255)]
-translation_step = 5
+colors = []
+translation_step = 5.
 rotation_step = np.radians(0.8)
-zoom_step = 50
+zoom_step = 50.
+positions = []
+dimensions = []
 
 
 def create_cube(position, dimensions):
@@ -54,17 +56,17 @@ def draw(projections):
 def translate(cubes, direction):
     translation = np.array([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]])
     if direction == 'a':
-        translation[0, 3] = -translation_step
-    elif direction == 'd':
         translation[0, 3] = translation_step
+    elif direction == 'd':
+        translation[0, 3] = -translation_step
     elif direction == 's':
         translation[1, 3] = -translation_step
     elif direction == 'w':
         translation[1, 3] = translation_step
     elif direction == 'f':
-        translation[2, 3] = -translation_step
-    elif direction == 'r':
         translation[2, 3] = translation_step
+    elif direction == 'r':
+        translation[2, 3] = -translation_step
 
     return [[translation.dot(cube[i]) for i in range(len(cube))] for cube in cubes]
 
@@ -92,14 +94,24 @@ def rotate(cubes, direction):
     return [[rotation.dot(cube[i]) for i in range(len(cube))] for cube in cubes]
 
 
-positions = [[-300, 0, 100], [0, 0, 100], [200, 0, 100]]
-dimensions = (100, 100, 100)
+def load_cubes_from_file(filename):
+    with open(filename, 'r') as f:
+        for line in f.readlines():
+            cube_data = [float(cell) for cell in line.split(", ")]
+            positions.append(cube_data[0:3])
+            dimensions.append(cube_data[3:6])
+            colors.append((cube_data[6:]))
+
+
+load_cubes_from_file("cubes.txt")
+# positions = [[-300., 0., 100.], [100., 100., 100.], [200., -100., 100.]]
+# dimensions = (100., 100., 100.)
 cubes = []
 
-for position in positions:
-    cubes.append(create_cube(position, dimensions))
+for i in range(len(positions)):
+    cubes.append(create_cube(positions[i], dimensions[i]))
 
-distance = 500
+distance = 501.
 
 pygame.init()
 pygame.display.set_caption("popierdalające kropki")
@@ -137,9 +149,9 @@ while run:
             cubes = rotate(cubes, 'y')
 
         if keys[pygame.K_UP]:
-            distance -= zoom_step
-        if keys[pygame.K_DOWN]:
             distance += zoom_step
+        if keys[pygame.K_DOWN]:
+            distance -= zoom_step
 
     projections = project(cubes, distance)
     draw(projections)
