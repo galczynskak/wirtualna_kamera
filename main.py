@@ -43,26 +43,26 @@ while True:
             cuboids = translate(cuboids, 'left')
         if keys[pygame.K_d]:
             cuboids = translate(cuboids, 'right')
-        if keys[pygame.K_s]:
+        if keys[pygame.K_LSHIFT]:
             cuboids = translate(cuboids, 'down')
-        if keys[pygame.K_w]:
+        if keys[pygame.K_SPACE]:
             cuboids = translate(cuboids, 'up')
-        if keys[pygame.K_f]:
+        if keys[pygame.K_s]:
             cuboids = translate(cuboids, 'back')
-        if keys[pygame.K_r]:
+        if keys[pygame.K_w]:
             cuboids = translate(cuboids, 'forward')
 
-        if keys[pygame.K_l]:
+        if keys[pygame.K_DOWN]:
             cuboids = rotate(cuboids, 'rot_right')
-        if keys[pygame.K_j]:
+        if keys[pygame.K_UP]:
             cuboids = rotate(cuboids, 'rot_left')
-        if keys[pygame.K_k]:
+        if keys[pygame.K_RIGHT]:
             cuboids = rotate(cuboids, 'rot_down')
-        if keys[pygame.K_i]:
+        if keys[pygame.K_LEFT]:
             cuboids = rotate(cuboids, 'rot_up')
-        if keys[pygame.K_h]:
+        if keys[pygame.K_q]:
             cuboids = rotate(cuboids, 'rot_forward')
-        if keys[pygame.K_y]:
+        if keys[pygame.K_e]:
             cuboids = rotate(cuboids, 'rot_back')
 
         if keys[pygame.K_EQUALS]:
