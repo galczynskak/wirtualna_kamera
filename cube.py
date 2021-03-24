@@ -30,8 +30,8 @@ def project(cubes, distance, window_height, window_width):
         for i in range(len(cube)):
             projection.append(projection_matrix.dot(cube[i]))
             projection[i] *= (distance / (cube[i][2] + distance))
-            projection[i][1] += window_height/2
-            projection[i][0] += window_width/2
+            projection[i][1] += window_height / 2
+            projection[i][0] += window_width / 2
         projections.append(projection)
     return projections
 
@@ -43,15 +43,15 @@ def draw(projections, window):
         for coordinates in projection:
             pygame.draw.circle(window, color, coordinates, 3)
 
-        pygame.draw.line(window, color, projection[0], projection[1])
-        pygame.draw.line(window, color, projection[0], projection[2])
-        pygame.draw.line(window, color, projection[0], projection[4])
-        pygame.draw.line(window, color, projection[7], projection[6])
-        pygame.draw.line(window, color, projection[7], projection[5])
-        pygame.draw.line(window, color, projection[7], projection[3])
-        pygame.draw.line(window, color, projection[2], projection[6])
-        pygame.draw.line(window, color, projection[2], projection[3])
-        pygame.draw.line(window, color, projection[5], projection[1])
-        pygame.draw.line(window, color, projection[5], projection[4])
-        pygame.draw.line(window, color, projection[3], projection[1])
-        pygame.draw.line(window, color, projection[6], projection[4])
+        pygame.draw.line(window, color, projection[0], projection[1], 3)
+        pygame.draw.line(window, color, projection[0], projection[2], 3)
+        pygame.draw.line(window, color, projection[0], projection[4], 3)
+        pygame.draw.line(window, color, projection[7], projection[6], 3)
+        pygame.draw.line(window, color, projection[7], projection[5], 3)
+        pygame.draw.line(window, color, projection[7], projection[3], 3)
+        pygame.draw.line(window, color, projection[2], projection[6], 3)
+        pygame.draw.line(window, color, projection[2], projection[3], 3)
+        pygame.draw.line(window, color, projection[5], projection[1], 3)
+        pygame.draw.line(window, color, projection[5], projection[4], 3)
+        pygame.draw.line(window, color, projection[3], projection[1], 3)
+        pygame.draw.line(window, color, projection[6], projection[4], 3)

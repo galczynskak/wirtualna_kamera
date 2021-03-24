@@ -1,9 +1,12 @@
 from cube import *
+from image import *
 from matrix import *
 
 distance = 501.
 zoom_step = 50.
 window_width, window_height = 1000, 1000
+screenshot_index = 1
+clear_directory('screenshots')
 
 positions, dimensions = load_cubes_from_file("cubes.txt")
 cubes = []
@@ -16,7 +19,6 @@ pygame.display.set_caption("Visual Camera")
 
 run = True
 while run:
-    window.fill((0, 0, 0))
     for event in pygame.event.get():
         run = False if event.type == pygame.QUIT else True
         keys = pygame.key.get_pressed()
@@ -51,6 +53,16 @@ while run:
         if keys[pygame.K_DOWN]:
             distance -= zoom_step
 
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE:
+                save_screenshot(screenshot_index, window)
+                screenshot_index += 1
+
+        if keys[pygame.K_q]:
+            pygame.quit()
+            raise SystemExit
+
+    window.fill((0, 0, 0))
     projections = project(cubes, distance, window_height, window_width)
     draw(projections, window)
     pygame.display.update()
