@@ -55,3 +55,43 @@ def draw(projections, window):
         pygame.draw.line(window, color, projection[5], projection[4], 3)
         pygame.draw.line(window, color, projection[3], projection[1], 3)
         pygame.draw.line(window, color, projection[6], projection[4], 3)
+
+
+def get_walls(cube):
+    return np.array([[cube[0], cube[1], cube[2], cube[3]],
+                     [cube[0], cube[1], cube[4], cube[5]],
+                     [cube[0], cube[2], cube[4], cube[6]],
+                     [cube[4], cube[5], cube[6], cube[7]],
+                     [cube[1], cube[3], cube[5], cube[7]],
+                     [cube[2], cube[3], cube[6], cube[7]]])
+
+
+def find_plane(wall):
+    a, b, c = wall[0][:3]
+    d, e, f = wall[1][:3]
+    g, h, i = wall[2][:3]
+
+    A = b*(f-i) + e*(i-c) + h*(c-f)
+    B = a*(i-f) + d*(c-i) + g*(f-c)
+    C = a*(e-h) + d*(h-b) + g*(b-e)
+    D = a*(h*f - e*i) + d*(b*i - c*h) + g*(c*e - b*f)
+
+    return A, B, C, D
+
+
+def find_crossing_point(p1, p2, plane):
+    a, b, c = p1[:3]
+    d, e, f = p2[:3]
+    A, B, C, D = plane
+
+    i = d-a
+    j = e-b
+    k = f-c
+
+    r = -(A*a + B*b + C*c + D)/(A*i + B*j + C*k)
+
+    x = a + r*i
+    y = b + r*j
+    z = c + r*k
+
+    return x, y, z
