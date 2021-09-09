@@ -65,4 +65,7 @@ while run:
     window.fill((0, 0, 0))
     projections = project(cubes, distance, window_height, window_width)
     draw(projections, window)
+    for cube in cubes:
+        triangles = get_triangles(cube)
+        draw_triangles(triangles, window, distance, window_height, window_width)
     pygame.display.update()
