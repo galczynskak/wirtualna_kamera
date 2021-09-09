@@ -88,6 +88,17 @@ def draw_triangles(triangles, window, distance, window_height, window_width):
         projected_triangle = np.delete(projected_triangle, [2, 3], 1)
         pygame.draw.polygon(window, color, projected_triangle)
 
+def center_triangles(triangles):
+    new_triangles = []
+    for idx, triangle in enumerate(triangles):
+        new_triangle = np.append(triangle, get_centroid_z(triangle))
+        new_triangles.append(new_triangle)
+    return new_triangles
+
+def get_centroid_z(triangle):
+    z = (triangle[0][2] + triangle[1][2] + triangle[2][2])/3
+    # print(z)
+    return z
 
 def get_triangles(cube):
     return np.array([
