@@ -88,6 +88,7 @@ def draw_triangles(triangles, window, distance, window_height, window_width):
         projected_triangle = np.delete(projected_triangle, [2, 3], 1)
         pygame.draw.polygon(window, color, projected_triangle)
 
+
 def center_triangles(triangles):
     new_triangles = []
     for idx, triangle in enumerate(triangles):

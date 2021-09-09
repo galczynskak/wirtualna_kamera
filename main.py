@@ -1,6 +1,7 @@
 from cube import *
 from image import *
 from matrix import *
+from bsp import *
 
 distance = 501.
 zoom_step = 50.
@@ -64,8 +65,7 @@ while run:
 
     window.fill((0, 0, 0))
     projections = project(cubes, distance, window_height, window_width)
-    for cube in cubes:
-        triangles = get_triangles(cube)
-        draw_triangles(triangles, window, distance, window_height, window_width)
-    draw(projections, window)
+    bsp(cubes, window, distance, window_height, window_width)
+
+    # draw(projections, window)
     pygame.display.update()

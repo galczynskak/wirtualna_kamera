@@ -1,37 +1,41 @@
-# from cube import *
-#
-#
-# def bsp(cubes, distance, window_height, window_width):
-#
-#     polygons = []
-#
-#     walls = []
-#     for cube in cubes:
-#         walls.append(get_walls(cube))
-#
-#     first_wall = walls.pop()
-#     first_projection = project_wall(first_wall, distance, window_height, window_width)
-#
-#     for wall in walls:
-#
-#
-#
-#
-#
-#
+from cube import *
 
-# def project_wall(wall, distance, window_height, window_width):
-#     projection_matrix = np.array([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 0, 0], [0, 0, 1 / distance, 1]])
-#     projection = []
-#
-#     for i in range(len(wall)):
-#         projection.append(projection_matrix.dot(wall[i]))
-#         projection[i] *= (distance / (wall[i][2] + distance))
-#         projection[i][1] += window_height / 2
-#         projection[i][0] += window_width / 2
-#
-#     center = max(wall[i][2] for i in range(len(wall))) - min(wall[i][2] for i in range(len(wall)))
-#     projection.append(center)
-#     return projection
-#
-#
+
+def bsp(cubes, window,  distance, window_height, window_width):
+
+    initial_triangles = []
+    for cube in cubes:
+        tmp_triangles = get_triangles(cube)
+        for triangle in tmp_triangles:
+            initial_triangles.append(triangle)
+
+    initial_triangles = center_triangles(initial_triangles)
+
+    triangles = []
+    for triangle in initial_triangles:
+        new_triangle = []
+        for point in triangle[:3]:
+            point = project_point(point, distance, window_height, window_width)
+            point = np.delete(point, [2, 3])
+            new_triangle.append(point)
+        new_triangle.append(triangle[3])
+        new_triangle.append(triangle[-1])
+        triangles.append(new_triangle)
+
+
+    #sortowanie po z centralnym
+    sorted_triangles = sorted(triangles, key=lambda x: x[4], reverse=True)
+    print(sorted_triangles)
+    print(100*'_')
+
+    #usuwanie współrzędnej centrum
+    last_triangles = []
+    for triangle in sorted_triangles:
+        last_triangle = np.delete(triangle, 4)
+        last_triangles.append(last_triangle)
+
+    for triangle in last_triangles:  #zrzutowane punkty, każdy trójkąt to tylko współrzędne zrzutowane i kolor
+        color = triangle[3]
+        triangle = np.delete(triangle, 3)
+        pygame.draw.polygon(window, color, triangle)
+
