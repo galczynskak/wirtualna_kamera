@@ -3,10 +3,9 @@ from image import *
 from matrix import *
 from painter import paint
 
-distance = 501.
 zoom_step = 50.
 window_width, window_height = 1000, 1000
-observer = [0, 0, -distance]
+observer = [0, 0, -501.]
 screenshot_index = 1
 clear_directory('screenshots')
 
@@ -53,7 +52,7 @@ while run:
         if keys[pygame.K_UP]:
             observer[2] += zoom_step
         if keys[pygame.K_DOWN]:
-            observer[2] -= zoom_step if distance - zoom_step >= 0 else 1
+            observer[2] -= zoom_step if observer[2] - zoom_step >= 0 else 1
 
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
@@ -65,8 +64,6 @@ while run:
             raise SystemExit
 
     window.fill((0, 0, 0))
-    projections = project(cubes, observer[2], window_height, window_width)
     paint(cubes, window, observer, window_height, window_width)
 
-    # draw(projections, window)
     pygame.display.update()

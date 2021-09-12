@@ -23,20 +23,6 @@ def create_cube(position, dimensions):
                      [x, y + ly, z, 1], [x + lx, y + ly, z, 1], [x, y + ly, z + lz, 1], [x + lx, y + ly, z + lz, 1]])
 
 
-def project(cubes, distance, window_height, window_width):
-    projections = []
-    for cube in cubes:
-        projection = []
-        projection_matrix = np.array([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 0, 0], [0, 0, 1 / distance, 1]])
-        for i in range(len(cube)):
-            projection.append(projection_matrix.dot(cube[i]))
-            projection[i] *= (distance / (cube[i][2] + distance))
-            projection[i][1] += window_height / 2
-            projection[i][0] += window_width / 2
-        projections.append(projection)
-    return projections
-
-
 def project_point(point, distance, window_height, window_width):
     projection_matrix = np.array([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 0, 0], [0, 0, 1 / distance, 1]])
 

@@ -53,7 +53,7 @@ def paint(cubes, window, observer, window_height, window_width):
         new_triangle.append(triangle[-1])
         triangles.append(new_triangle)
 
-    for triangle in triangles:  #zrzutowane punkty, każdy trójkąt to tylko współrzędne zrzutowane i kolor
+    for triangle in triangles:
         color = triangle[3]
         triangle = np.delete(triangle, 3)
         pygame.draw.polygon(window, color, triangle[:3])
