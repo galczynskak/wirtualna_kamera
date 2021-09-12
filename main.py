@@ -1,3 +1,4 @@
+from camera import Camera
 from phong import Phong
 from image import *
 from ball import Ball
@@ -28,6 +29,8 @@ light : Light = Light(
     i_d=[255, 255, 255],
     i_a=[10, 10, 10]
 )
+
+camera = Camera(ball, light)
 
 run=True
 while run:
@@ -70,5 +73,8 @@ while run:
     window.fill((0, 0, 0))
     pygame.draw.circle(window, ball.ka, (window_width / 2 + ball.center[0], window_height / 2 + ball.center[1]), ball.r)
     points_3d = ball.transform_circle_to_3d()
+    for point in points_3d:
+        color = camera.phong.phongify(point, ball)
+        window.set_at((int(window_width / 2 + point[0]), int(window_height / 2 + point[1])), color)
     # todo
     pygame.display.update()
