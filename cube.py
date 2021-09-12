@@ -37,36 +37,6 @@ def project(cubes, distance, window_height, window_width):
     return projections
 
 
-def draw(projections, window):
-    for i, projection in enumerate(projections):
-        projection = np.delete(projection, [2, 3], 1)
-        color = colors_lines[i]
-        for coordinates in projection:
-            pygame.draw.circle(window, color, coordinates, 3)
-
-        # krawędzie
-        pygame.draw.line(window, color, projection[0], projection[1], 3)
-        pygame.draw.line(window, color, projection[0], projection[2], 3)
-        pygame.draw.line(window, color, projection[0], projection[4], 3)
-        pygame.draw.line(window, color, projection[7], projection[6], 3)
-        pygame.draw.line(window, color, projection[7], projection[5], 3)
-        pygame.draw.line(window, color, projection[7], projection[3], 3)
-        pygame.draw.line(window, color, projection[2], projection[6], 3)
-        pygame.draw.line(window, color, projection[2], projection[3], 3)
-        pygame.draw.line(window, color, projection[5], projection[1], 3)
-        pygame.draw.line(window, color, projection[5], projection[4], 3)
-        pygame.draw.line(window, color, projection[3], projection[1], 3)
-        pygame.draw.line(window, color, projection[6], projection[4], 3)
-
-        #przekątne
-        pygame.draw.line(window, color, projection[1], projection[2], 2) #dół
-        pygame.draw.line(window, color, projection[0], projection[5], 2) #przód
-        pygame.draw.line(window, color, projection[2], projection[4], 2) #lewo
-        pygame.draw.line(window, color, projection[3], projection[6], 2) #tył
-        pygame.draw.line(window, color, projection[3], projection[5], 2) #prawo
-        pygame.draw.line(window, color, projection[5], projection[6], 2) #góra
-
-
 def project_point(point, distance, window_height, window_width):
     projection_matrix = np.array([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 0, 0], [0, 0, 1 / distance, 1]])
 
@@ -77,29 +47,6 @@ def project_point(point, distance, window_height, window_width):
 
     return projection
 
-
-def draw_triangles(triangles, window, distance, window_height, window_width):
-    for i, triangle in enumerate(triangles):
-        color = triangle[3]
-        projected_triangle = []
-        triangle = np.delete(triangle, 3)
-        for point in triangle:
-            projected_triangle.append(project_point(point, distance, window_height, window_width))
-        projected_triangle = np.delete(projected_triangle, [2, 3], 1)
-        pygame.draw.polygon(window, color, projected_triangle)
-
-
-def center_triangles(triangles):
-    new_triangles = []
-    for idx, triangle in enumerate(triangles):
-        new_triangle = np.append(triangle, get_centroid_z(triangle))
-        new_triangles.append(new_triangle)
-    return new_triangles
-
-def get_centroid_z(triangle):
-    z = (triangle[0][2] + triangle[1][2] + triangle[2][2])/3
-    # print(z)
-    return z
 
 def get_triangles(cube):
     return np.array([
@@ -120,35 +67,4 @@ def get_triangles(cube):
                      [cube[7], cube[5], cube[3], colors_polygons[4]],
                     #góra , colors_polygons[]
                      [cube[4], cube[5], cube[6], colors_polygons[5]],
-                     [cube[7], cube[6], cube[5], colors_polygons[5]]])
-
-
-# def find_plane(wall):
-#     a, b, c = wall[0][:3]
-#     d, e, f = wall[1][:3]
-#     g, h, i = wall[2][:3]
-#
-#     A = b*(f-i) + e*(i-c) + h*(c-f)
-#     B = a*(i-f) + d*(c-i) + g*(f-c)
-#     C = a*(e-h) + d*(h-b) + g*(b-e)
-#     D = a*(h*f - e*i) + d*(b*i - c*h) + g*(c*e - b*f)
-#
-#     return A, B, C, D
-#
-#
-# def find_crossing_point(p1, p2, plane):
-#     a, b, c = p1[:3]
-#     d, e, f = p2[:3]
-#     A, B, C, D = plane
-#
-#     i = d-a
-#     j = e-b
-#     k = f-c
-#
-#     r = -(A*a + B*b + C*c + D)/(A*i + B*j + C*k)
-#
-#     x = a + r*i
-#     y = b + r*j
-#     z = c + r*k
-#
-#     return x, y, z
+                     [cube[7], cube[6], cube[5], colors_polygons[5]]], dtype=object)

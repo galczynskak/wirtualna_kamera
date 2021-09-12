@@ -3,7 +3,7 @@ import functools as ft
 
 
 def get_point_distance(point1, point2):
-    return ((point1[0] * point2[0]) ** 2 + (point1[1] * point2[1]) ** 2 + (point1[2] * point2[2]) ** 2) ** .5
+    return ((point1[0] - point2[0]) ** 2 + (point1[1] - point2[1]) ** 2 + (point1[2] - point2[2]) ** 2) ** .5
 
 
 def compare_triangles(observer, triangle1, triangle2):
@@ -34,18 +34,13 @@ def sort_triangles_by_distance(triangles, observer):
 def paint(cubes, window, observer, window_height, window_width):
     distance = -observer[2]
     initial_triangles = []
+    
     for cube in cubes:
         tmp_triangles = get_triangles(cube)
         for triangle in tmp_triangles:
             initial_triangles.append(triangle)
 
-    # initial_triangles = center_triangles(initial_triangles)
-
-    #sortowanie po z centralnym
-    # sorted_triangles = sorted(triangles, key=lambda x: x[4], reverse=True)
     sorted_triangles = sort_triangles_by_distance(initial_triangles, observer)
-    # print(sorted_triangles)
-    # print(100*'_')
 
     triangles = []
     for triangle in sorted_triangles:
@@ -57,12 +52,6 @@ def paint(cubes, window, observer, window_height, window_width):
         new_triangle.append(triangle[3])
         new_triangle.append(triangle[-1])
         triangles.append(new_triangle)
-
-    # #usuwanie współrzędnej centrum
-    # last_triangles = []
-    # for triangle in triangles:
-    #     last_triangle = np.delete(triangle, 4)
-    #     last_triangles.append(last_triangle)
 
     for triangle in triangles:  #zrzutowane punkty, każdy trójkąt to tylko współrzędne zrzutowane i kolor
         color = triangle[3]

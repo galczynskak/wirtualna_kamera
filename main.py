@@ -6,7 +6,7 @@ from painter import paint
 distance = 501.
 zoom_step = 50.
 window_width, window_height = 1000, 1000
-observer = [1, 1, -distance]
+observer = [0, 0, -distance]
 screenshot_index = 1
 clear_directory('screenshots')
 
@@ -51,9 +51,9 @@ while run:
             cubes = rotate(cubes, 'y')
 
         if keys[pygame.K_UP]:
-            distance += zoom_step
+            observer[2] += zoom_step
         if keys[pygame.K_DOWN]:
-            distance -= zoom_step
+            observer[2] -= zoom_step if distance - zoom_step >= 0 else 1
 
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
@@ -65,7 +65,7 @@ while run:
             raise SystemExit
 
     window.fill((0, 0, 0))
-    projections = project(cubes, distance, window_height, window_width)
+    projections = project(cubes, observer[2], window_height, window_width)
     paint(cubes, window, observer, window_height, window_width)
 
     # draw(projections, window)
