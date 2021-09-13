@@ -15,66 +15,73 @@ pygame.init()
 pygame.display.set_caption("Phong model of lighting - ball")
 
 ball : Ball = Ball(
-    center=[0, 0, 0],
-    r=200,
+    center=[window_width / 2, window_height / 2, 40],
+    r=50,
     alpha=10,
-    ks=[255, 255, 255],
+    ks=[200, 100, 255],
     kd=[255, 0, 0],
-    ka=[128, 0, 0]
+    ka=[10, 0, 0]
 )
 
 light : Light = Light(
-    center=[0, 0, 0],
+    center=[0, 0, 1000],
     i_s=[255, 255, 255],
     i_d=[255, 255, 255],
     i_a=[10, 10, 10]
 )
 
 camera = Camera(ball, light)
+points_3d = ball.transform_circle_to_3d()
+
+
+def draw(camera, ball):
+    for point in points_3d:
+        color = camera.phong.phongify(point, ball, camera.light)
+        window.set_at((int(window_width / 2 + point[0]), int(window_height / 2 + point[1])), color)
+
+
+window.fill((0, 0, 0))
+draw(camera, ball)
+pygame.display.update()
 
 run=True
+
 while run:
     for event in pygame.event.get():
         run = False if event.type == pygame.QUIT else True
         keys = pygame.key.get_pressed()
-
+        # print(event.type == pygame.KEYDOWN)
         if event.type == pygame.KEYDOWN:
             # wybór materiału
-            if event.key == pygame.K_1:
+            if keys[pygame.K_1]:
                 ball.set_material('metal')
-            if event.key == pygame.K_2:
+            if keys[pygame.K_2]:
                 ball.set_material('wood')
-            if event.key == pygame.K_3:
+            if keys[pygame.K_3]:
                 ball.set_material('plastic')
 
             #sterowanie
-            if event.key == pygame.K_w:
-                light.move_light_source('up')
-            if event.key == pygame.K_s:
-                light.move_light_source('down')
-            if event.key == pygame.K_a:
-                light.move_light_source('left')
-            if event.key == pygame.K_d:
-                light.move_light_source('right')
-            if event.key == pygame.K_q:
-                light.move_light_source('forwards')
-            if event.key == pygame.K_e:
-                light.move_light_source('backwards')
+            if keys[pygame.K_w]:
+                camera.move_light_source('up')
+            if keys[pygame.K_s]:
+                camera.move_light_source('down')
+            if keys[pygame.K_a]:
+                camera.move_light_source('left')
+            if keys[pygame.K_d]:
+                camera.move_light_source('right')
+            if keys[pygame.K_q]:
+                camera.move_light_source('forwards')
+            if keys[pygame.K_e]:
+                camera.move_light_source('backwards')
 
             # screenshot
-            if event.key == pygame.K_SPACE:
+            if keys[pygame.K_SPACE]:
                 save_screenshot(screenshot_index, window)
                 screenshot_index += 1
 
-        if keys[pygame.K_ESCAPE]:
-            pygame.quit()
-            raise SystemExit
+            if keys[pygame.K_ESCAPE]:
+                pygame.quit()
+                raise SystemExit
 
-    window.fill((0, 0, 0))
-    pygame.draw.circle(window, ball.ka, (window_width / 2 + ball.center[0], window_height / 2 + ball.center[1]), ball.r)
-    points_3d = ball.transform_circle_to_3d()
-    for point in points_3d:
-        color = camera.phong.phongify(point, ball)
-        window.set_at((int(window_width / 2 + point[0]), int(window_height / 2 + point[1])), color)
-    # todo
-    pygame.display.update()
+            draw(camera, ball)
+            pygame.display.update()

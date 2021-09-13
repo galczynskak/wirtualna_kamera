@@ -16,7 +16,7 @@ class Ball:
         if ks is None:
             ka = [255, 255, 255]
 
-        self.center = center
+        self.center = center # [x, y, z]
         self.r = r
         self.ks = ks
         self.kd = kd
@@ -49,7 +49,11 @@ class Ball:
         for y in range(-self.r, self.r + 1, 1):
             current_max_value = sqrt(abs(self.r ** 2 - y ** 2))
             for x in range(int(-current_max_value), int(current_max_value) + 1, 1):
-                z = sqrt(self.r ** 2 - (x - self.center[0]) ** 2 - (y - self.center[1]) ** 2) + self.center[2]
+                z = (self.r ** 2 - (x - self.center[0]) ** 2 - (y - self.center[1]) ** 2) ** 0.5 + self.center[2]
                 points.append([x, y, z])
         return points
 
+# for y in range(int(self.center[1] - self.r), int(self.center[1] + self.r + 1), 1):
+#             current_max_value = abs(self.r ** 2 - y ** 2) ** 0.5
+#             for x in range(int(self.center[0] - current_max_value), int(self.center[0] + current_max_value) + 1, 1):
+#                 z = abs((self.r ** 2 - (x - self.center[0]) ** 2 - (y - self.center[1]) ** 2)) ** 0.5 + self.center[2]

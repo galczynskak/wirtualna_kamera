@@ -1,6 +1,6 @@
 from phong import Phong
 
-LIGHT_STEP=5
+LIGHT_STEP=200
 
 class Camera:
     def __init__(self, ball, light):
@@ -12,10 +12,10 @@ class Camera:
 
     def move_light_source(self, direction):
         if direction == 'up':
-            new_coord = self.light.center[1] + LIGHT_STEP
+            new_coord = self.light.center[1] - LIGHT_STEP
             self.light.center = [self.light.center[0], new_coord, self.light.center[2]]
         if direction == 'down':
-            new_coord = self.light.center[1] - LIGHT_STEP
+            new_coord = self.light.center[1] + LIGHT_STEP
             self.light.center = [self.light.center[0], new_coord, self.light.center[2]]
         if direction == 'left':
             new_coord = self.light.center[0] - LIGHT_STEP
@@ -29,3 +29,4 @@ class Camera:
         if direction == 'backwards':
             new_coord = self.light.center[2] - LIGHT_STEP
             self.light.center = [self.light.center[0], self.light.center[1], new_coord]
+        print(self.light.center)
