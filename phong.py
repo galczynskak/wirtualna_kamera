@@ -30,7 +30,7 @@ class Phong:
 
     def __get_light_intensity__(self, ball : Ball, light_source : Light, cam_v, norm_v, light_v, rad_v, idx):
         # print(ball.ks, ball.kd, ball.ka, cam_v, norm_v, light_v, rad_v)
-        intensity = ball.ka[idx] * light_source.i_a[idx] + ball.kd[idx] * light_source.i_d[idx] + ball.ks[idx] * light_source.i_s[idx]
+        intensity = ball.ka[idx] * light_source.i_a[idx] #+ ball.kd[idx] * light_source.i_d[idx] + ball.ks[idx] * light_source.i_s[idx]
         # print(light_v, norm_v)
         # print(rad_v, cam_v)
         l_n_v = light_v.dot(norm_v)

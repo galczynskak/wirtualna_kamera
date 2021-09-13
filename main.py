@@ -17,7 +17,7 @@ pygame.display.set_caption("Phong model of lighting - ball")
 ball : Ball = Ball(
     center=[window_width / 2, window_height / 2, 40],
     r=50,
-    alpha=10,
+    alpha=50,
     ks=[200, 100, 255],
     kd=[255, 0, 0],
     ka=[10, 0, 0]
@@ -37,7 +37,9 @@ points_3d = ball.transform_circle_to_3d()
 def draw(camera, ball):
     for point in points_3d:
         color = camera.phong.phongify(point, ball, camera.light)
-        window.set_at((int(window_width / 2 + point[0]), int(window_height / 2 + point[1])), color)
+        window.set_at((int(point[0]), int(point[1])), color)
+        
+
 
 
 window.fill((0, 0, 0))

@@ -46,14 +46,10 @@ class Ball:
     def transform_circle_to_3d(self):
         points = []
 
-        for y in range(-self.r, self.r + 1, 1):
-            current_max_value = sqrt(abs(self.r ** 2 - y ** 2))
-            for x in range(int(-current_max_value), int(current_max_value) + 1, 1):
-                z = (self.r ** 2 - (x - self.center[0]) ** 2 - (y - self.center[1]) ** 2) ** 0.5 + self.center[2]
+        for y in range(int(self.center[1] - self.r), int(self.center[1] + self.r + 1), 1):
+            current_max_value = abs(self.r ** 2 - y ** 2) ** 0.5
+            for x in range(int(self.center[0] - current_max_value), int(self.center[0] + current_max_value) + 1, 1):
+                z = abs((self.r ** 2 - (x - self.center[0]) ** 2 - (y - self.center[1]) ** 2)) ** 0.5 + self.center[2]
                 points.append([x, y, z])
         return points
 
-# for y in range(int(self.center[1] - self.r), int(self.center[1] + self.r + 1), 1):
-#             current_max_value = abs(self.r ** 2 - y ** 2) ** 0.5
-#             for x in range(int(self.center[0] - current_max_value), int(self.center[0] + current_max_value) + 1, 1):
-#                 z = abs((self.r ** 2 - (x - self.center[0]) ** 2 - (y - self.center[1]) ** 2)) ** 0.5 + self.center[2]
