@@ -25,23 +25,20 @@ class Ball:
 
     def set_material(self, material):
         if material is None or material == 'metal':
-            # self.ks = 
-            # self.kd = 
-            # self.ka = 
-            # self.alpha = 
-            pass
-        elif material == 'wood':
-            # self.ks = 
-            # self.kd = 
-            # self.ka = 
-            # self.alpha = 
-            pass
-        else:  # plastic
-            # self.ks = 
-            # self.kd = 
-            # self.ka = 
-            # self.alpha = 
-            pass
+            self.ks = [255, 255, 255]
+            self.kd = [200, 200, 200]
+            self.ka = [10, 0, 0]
+            self.alpha = 10
+        elif material == 'polished wood':
+            self.ks = [150, 150, 150]
+            self.kd = [109, 75, 50]
+            self.ka = [50, 0, 0]
+            self.alpha = 100
+        else:  # rubber
+            self.ks = [100, 100, 100]
+            self.kd = [80, 80, 80]
+            self.ka = [10, 10, 10]
+            self.alpha = 500
 
     def transform_circle_to_3d(self):
         points = []

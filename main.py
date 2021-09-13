@@ -16,16 +16,13 @@ pygame.display.set_caption("Phong model of lighting - ball")
 
 ball : Ball = Ball(
     center=[window_width / 2, window_height / 2, 40],
-    r=50,
-    alpha=50,
-    ks=[200, 100, 255],
-    kd=[255, 0, 0],
-    ka=[10, 0, 0]
+    r=50
 )
+ball.set_material('metal')
 
 light : Light = Light(
     center=[0, 0, 1000],
-    i_s=[255, 255, 255],
+    i_s=[200, 200, 200],
     i_d=[255, 255, 255],
     i_a=[10, 10, 10]
 )
@@ -38,8 +35,6 @@ def draw(camera, ball):
     for point in points_3d:
         color = camera.phong.phongify(point, ball, camera.light)
         window.set_at((int(point[0]), int(point[1])), color)
-        
-
 
 
 window.fill((0, 0, 0))
@@ -52,15 +47,18 @@ while run:
     for event in pygame.event.get():
         run = False if event.type == pygame.QUIT else True
         keys = pygame.key.get_pressed()
-        # print(event.type == pygame.KEYDOWN)
+        
         if event.type == pygame.KEYDOWN:
             # wybór materiału
             if keys[pygame.K_1]:
+                print('Setting material to metal.')
                 ball.set_material('metal')
             if keys[pygame.K_2]:
-                ball.set_material('wood')
+                print('Setting material to wood')
+                ball.set_material('polished wood')
             if keys[pygame.K_3]:
-                ball.set_material('plastic')
+                print('Setting material to rubber.')
+                ball.set_material('rubber')
 
             #sterowanie
             if keys[pygame.K_w]:
